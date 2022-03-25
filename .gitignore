@@ -1,0 +1,10 @@
+/.vs
+src/.vs/
+
+*.vcxproj.user
+*.dll
+
+build/client/x86/Release
+build/client/x86/Debug
+build/client/x64/Release
+build/client/x64/Debug

@@ -1,0 +1,48 @@
+{
+    "folder": "data",
+    "sprites": [
+        {
+            "file": "gfx/arms_1.png",
+            "name": "arms_1"
+        }, 
+        {
+            "file": "gfx/arms_2.png"
+        },
+        {
+            "file": "gfx/arms_3.png"
+        },
+        {
+            "file": "gfx/face_1.png"
+        },
+        {
+            "file": "gfx/face_2.png"
+        },
+        {
+            "file": "gfx/face_3.png"
+        },
+        {
+            "file": "gfx/face_4.png"
+        },
+        {
+            "file": "gfx/face_5.png"
+        },
+        {
+            "file": "gfx/feet_1.png"
+        },
+        {
+            "file": "gfx/feet_2.png"
+        },
+        {
+            "file": "gfx/nug_1.png"
+        },
+        {
+            "file": "gfx/nug_2.png"
+        },
+        {
+            "file": "gfx/nug_3.png"
+        },
+        {
+            "file": "gfx/nug_full.png"
+        }
+    ]
+  }
