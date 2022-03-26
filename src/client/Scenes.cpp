@@ -27,7 +27,7 @@ void Scenes::Render(sf::RenderTarget & tgt, sf::RenderStates states)
 	for(auto & object : _objects)
 	{
 		if(object->_type == ObjectType::Scene)
-			((TiledScene*)object.get())->RenderUI();
+			((Scene*)object.get())->RenderUI();
 	}
 }
 

@@ -24,6 +24,7 @@ public:
 	virtual void SetPosition(Vector2f pos, bool update);
 	virtual void UpdatePosition();
 	virtual void Move(Vector2f pos);
+	virtual void SetScale(Vector2f value);
 
 public:
 	using Value = unique_ptr<Object>;

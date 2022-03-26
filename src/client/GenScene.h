@@ -16,5 +16,7 @@ public:
 	void Tick() override;
 	void Render(sf::RenderTarget & tgt, sf::RenderStates states) override;
 	bool HandleEvent(const sf::Event & ev) override;
+
+	bool my_tool_active = true;
 };
 }

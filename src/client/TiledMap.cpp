@@ -33,7 +33,7 @@ TiledMap::TiledMap(const string & map_name) :
 
 TiledUnit * TiledMap::AddUnit(unique_ptr<TiledUnit> unit)
 {
-	auto object = AddObject(make_unique<Sprite>(Sprite::List["nug_2.png"]));
+	auto object = AddObject(make_unique<Sprite>(*Sprite::List["cogollo\\full\\1.png"].get()));
 
 	((Sprite*)object)->SetID(unit->_name);
 

@@ -13,8 +13,7 @@ TiledUnit::TiledUnit(const string & name):
 	Object(ObjectType::Unit, "TiledUnit"),
 	_name(name)
 {
-	//AddObject(make_unique<Sprite>("gfx/nug_3.png"))
-	AddObject(make_unique<Sprite>(Sprite::List["nug_3.png"]))
+	AddObject(make_unique<Sprite>(*Sprite::List["cogollo\\full\\2.png"].get()))
 			->SetID(_name);
 
 	OnHotpatch();

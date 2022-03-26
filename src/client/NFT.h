@@ -20,7 +20,6 @@ public:
 		_name(nft._name),
 		_type(nft._type)
 	{
-
 	}
 
 	~NFT() override;
@@ -38,9 +37,7 @@ public:
 	string   _name;
 	NFT_Type _type;
 
-	void GenerateRandom()
-	{
-	}
+	unique_ptr<NFT> GenerateRandom();
 
 	static unordered_map<string, unique_ptr<NFT>> List;
 };

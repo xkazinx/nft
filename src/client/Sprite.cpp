@@ -4,15 +4,22 @@
 
 namespace Client
 {
-unordered_map<string, Sprite>  Sprite::List;
-unordered_map<string, Texture> Sprite::Textures;
+unordered_map<string, unique_ptr<Sprite>> Sprite::List;
+unordered_map<string, Texture>            Sprite::Textures;
+
+unique_ptr<Sprite> & Sprite::Add(const Path & file)
+{
+	List.insert({ file.string(), make_unique<Sprite>(file) });
+
+	return List[file.string()];
+}
 
 Texture & Sprite::GetTexture(const string & texture_name)
 {
 	if(!Textures.contains(texture_name))
 	{
-		Textures.insert(std::make_pair(texture_name, Texture{}));
-		Textures[texture_name].loadFromFile(texture_name);
+		Textures.insert({ texture_name, Texture{} });
+		Textures[texture_name].loadFromFile((path::DataDir / texture_name).string());
 	}
 
 	return Textures[texture_name];
@@ -57,13 +64,8 @@ void Sprite::Initialize()
 		auto category_name = path.parent_path();
 		auto nft_name      = category_name.parent_path().filename();
 		category_name      = category_name.filename();
-
 		
-		//#todo here, Object() and ~Object() is being called at every insert. Maybe, this is solved using unique_ptr, but is there a way to solve this holding instances and not pointers?
-
-		auto path_str = path.string();
-
-		List.insert(make_pair(path_str.substr(src_sz + 1, path_str.size()), Sprite{ path_str }));
+		auto & sprite = Sprite::Add(nft_name / category_name / path.filename());
 
 		if(!NFT::List.contains(nft_name.string()))
 		{
@@ -73,20 +75,17 @@ void Sprite::Initialize()
 		auto & nft = NFT::List[nft_name.string()];
 		if(auto category = nft->Find(category_name.string(), NFT_Type::Category))
 		{
-			category->AddObject(make_unique<NFT>(path.filename().string(), NFT_Type::Asset));
+			auto asset = category->AddObject(make_unique<NFT>(path.filename().string(), NFT_Type::Asset));
+
+			auto spr = asset->AddObject(make_unique<Sprite>(*sprite.get()));
 		}
 		else
 		{
 			nft->AddObject(make_unique<NFT>(category_name.string(), NFT_Type::Category));
 		}
 
-		kazin::Log::Debug("Fetched Path: path({}) nft_name({}) category_name({})", path.string(), nft_name.string(),
-		                  category_name.string());
-	}
-
-	for(auto & pair : List)
-	{
-		kazin::Log::Debug("Pair primary: {}, second {}", pair.first, pair.second._sprite.getTexture()->getSize().x);
+		kazin::Log::Debug("Fetched Path: path({}) nft_name({}) category_name({})",
+			path.string(), nft_name.string(), category_name.string());
 	}
 }
 
@@ -131,5 +130,12 @@ void Sprite::Move(Vector2f pos)
 	_sprite.move(pos);
 
 	Object::Move(pos);
+}
+
+void Sprite::SetScale(Vector2f value)
+{
+	_sprite.setScale(value);
+
+	Object::SetScale(value);
 }
 }

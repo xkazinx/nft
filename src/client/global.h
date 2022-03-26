@@ -218,6 +218,7 @@ namespace Global
 		};
 	}
 
+	// #create_object_type
 	enum class ObjectType
 	{
 		Sprite,
@@ -227,7 +228,6 @@ namespace Global
 		Tile,
 		Unit,
 		Object,
-		Cogollo,
 		NFT,
 	};
 
@@ -271,9 +271,8 @@ namespace Global
 	}
 
 	using SceneID = Global::scene::ID;
-}
 
-namespace path
-{
-	extern Path DataDir;
-}}
+	namespace path
+	{
+		extern Path DataDir;
+	}}}

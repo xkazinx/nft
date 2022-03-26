@@ -73,9 +73,6 @@
     <ClCompile Include="..\..\..\..\LIBPATH\kazin\include\kazin\console\log.cpp">
       <Filter>dep</Filter>
     </ClCompile>
-    <ClCompile Include="Cogollo.cpp">
-      <Filter>scene\common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\LIBPATH\kazin\include\kazin\file.cpp">
       <Filter>dep</Filter>
     </ClCompile>
@@ -87,6 +84,9 @@
     </ClCompile>
     <ClCompile Include="NFT.cpp">
       <Filter>scene\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\LIBPATH\kazin\include\kazin\container.cpp">
+      <Filter>dep</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -155,9 +155,6 @@
     </ClInclude>
     <ClInclude Include="Scenes.h">
       <Filter>scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Cogollo.h">
-      <Filter>scene\common</Filter>
     </ClInclude>
     <ClInclude Include="GenScene.h">
       <Filter>scene\gen</Filter>

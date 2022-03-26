@@ -6,8 +6,10 @@ namespace Client
 class Sprite final : public Object
 {
 public:
-	static unordered_map<string, Sprite>  List;
-	static unordered_map<string, Texture> Textures;
+	static unordered_map<string, unique_ptr<Sprite>> List;
+	static unordered_map<string, Texture>            Textures;
+
+	static unique_ptr<Sprite> & Add(const Path & file);
 
 	static Texture & GetTexture(const string & texture_name);
 
@@ -17,6 +19,18 @@ public:
 public:
 	Sprite() :
 		Object(ObjectType::Sprite, "Sprite")
+	{
+	}
+
+	Sprite(const Sprite & sprite) :
+		Object(sprite),
+		_sprite(sprite._sprite)
+	{
+	}
+
+	Sprite(const Path & file) :
+		Object(ObjectType::Sprite, "Sprite"),
+		_sprite(GetTexture(file.string()))
 	{
 	}
 
@@ -48,7 +62,8 @@ public:
 	void OnHotpatch() override;
 	void SetPosition(Vector2f pos, bool update = false) override;
 	void Move(Vector2f pos) override;
-	
+	void SetScale(Vector2f value) override;
+
 	sf::Sprite _sprite;
 };
 }

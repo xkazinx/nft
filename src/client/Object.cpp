@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "TiledScene.h"
 #include "Sprite.h"
+#include "NFT.h"
 
 namespace Client
 {
@@ -24,7 +25,41 @@ Object::Object(const Type type, const string & id):
 Object::Object(const Object & object)
 {
 	for(auto & child : object._objects)
-		_objects.emplace_back(make_unique<Object>(*child.get()));
+	{
+		auto & ref = *child.get();
+
+		Client::Object * obj = nullptr;
+
+		switch(child->_type)
+		{
+		// #create_object_type
+			using enum ObjectType;
+
+		case Sprite:
+			obj = AddObject(make_unique<Client::Sprite>((Client::Sprite&)ref));
+			continue;
+		case Scene:
+		case Scenes:
+		case Map:
+		case Tile:
+		case Unit:
+		case Object:
+			assert(0); // has sub_objects
+			break;
+		case NFT:
+			obj = AddObject(make_unique<Client::NFT>((Client::NFT&)ref));
+			break;
+		default: ;
+			break;
+		}
+
+		if(!obj)
+			obj = AddObject(make_unique<Client::Object>(ref));
+
+		obj->_type = ref._type;
+		obj->_uid = ref._uid; // #todo
+		obj->_id = ref._id;
+	}
 }
 
 Object::~Object()
@@ -86,6 +121,12 @@ void Object::Move(Vector2f pos)
 	}
 }
 
+void Object::SetScale(Vector2f value)
+{
+	for(auto & object : _objects)
+		object->SetScale(value);
+}
+
 Object * Object::AddObject(Value object)
 {
 	_objects.emplace_back(std::move(object));
@@ -95,7 +136,7 @@ Object * Object::AddObject(Value object)
 
 void Object::RemoveObject(const string & id)
 {
-	std::erase_if(
+	erase_if(
 		_objects,
 		[&](const auto & object)
 		{
