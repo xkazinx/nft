@@ -20,20 +20,14 @@ Texture & Sprite::GetTexture(const string & texture_name)
 
 void Sprite::Initialize()
 {
-	List =
-	{
-		{
-			"cogollo",
-			Sprite{ "gfx/nug_full.png" }
-		}
-	};
-
 	vector<string> exclude;
 
 	{
-		ifstream f("data/configs.json");
+		ifstream f("configs.json");
 		json     j;
 		f >> j;
+
+		path::DataDir = j.value<string>("data_dir", path::DataDir.string());
 
 		for(auto & path : j["exclude"])
 		{
@@ -41,36 +35,39 @@ void Sprite::Initialize()
 		}
 	}
 
+	const Path data_path = "data";
+	const Path src       = std::filesystem::current_path() / data_path;
+	auto       src_str   = src.string();
+	const auto src_sz    = src_str.size();
+
 	vector<Path> paths;
-	const Path   src     = std::filesystem::current_path() / "data";
-	auto         src_str = src.string();
-	const auto   src_sz  = src_str.size();
 	kazin::file::Fetch(src, paths);
 
 	for(auto & path : paths)
 	{
-		if(std::ranges::find(exclude, path.string()) != exclude.end())
+		if(ranges::find(exclude, path.string()) != exclude.end())
 		{
-			kazin::Print("Excluded {}", path.string());
+			kazin::Print("Excluded Path: {}", path.string());
 			continue;
 		}
 
 		if(path.extension() != ".png")
 			continue;
+
+		auto category_name = path.parent_path();
+		auto nft_name      = category_name.parent_path().filename();
+		category_name      = category_name.filename();
+
 		
 		//#todo here, Object() and ~Object() is being called at every insert. Maybe, this is solved using unique_ptr, but is there a way to solve this holding instances and not pointers?
 
-		auto str = path.string();
-		
-		List.insert(std::make_pair(str.substr(src_sz + 1, str.size()), Sprite{ str }));
+		auto path_str = path.string();
 
-		auto category_name = path.parent_path();
-		auto nft_name = category_name.parent_path().filename();
-		category_name = category_name.filename();
+		List.insert(make_pair(path_str.substr(src_sz + 1, path_str.size()), Sprite{ path_str }));
 
 		if(!NFT::List.contains(nft_name.string()))
 		{
-			NFT::List[nft_name.string()] = make_unique<NFT>(nft_name.string(), NFT_Type::Main);	
+			NFT::List[nft_name.string()] = make_unique<NFT>(nft_name.string(), NFT_Type::Main);
 		}
 
 		auto & nft = NFT::List[nft_name.string()];
@@ -81,11 +78,10 @@ void Sprite::Initialize()
 		else
 		{
 			nft->AddObject(make_unique<NFT>(category_name.string(), NFT_Type::Category));
-
 		}
 
-		kazin::Log::Debug("Fetched Path: path({}) nft_name({}) category_name({})", path.string(), nft_name.string(), category_name.string());
-
+		kazin::Log::Debug("Fetched Path: path({}) nft_name({}) category_name({})", path.string(), nft_name.string(),
+		                  category_name.string());
 	}
 
 	for(auto & pair : List)

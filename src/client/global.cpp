@@ -6,9 +6,9 @@
 
 namespace Client::Global
 {
-App *                  g_app;
-unique_ptr<Scenes>   g_scenes;
-u16                    g_res_x = 1024, g_res_y = 768;
+App *              g_app;
+unique_ptr<Scenes> g_scenes;
+u16                g_res_x = 1024, g_res_y = 768;
 
 void Initialize()
 {
@@ -68,4 +68,8 @@ namespace text
 		g_app->_window.draw(shape);
 	}
 }
-}
+
+namespace path
+{
+	Path DataDir = "data";
+}}

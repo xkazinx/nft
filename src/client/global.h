@@ -271,4 +271,9 @@ namespace Global
 	}
 
 	using SceneID = Global::scene::ID;
+}
+
+namespace path
+{
+	extern Path DataDir;
 }}
