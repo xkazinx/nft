@@ -4,7 +4,7 @@
 #include "TiledTile.h"
 #include "TiledBomb.h"
 #include "TiledScene.h"
-#include "SceneMgr.h"
+#include "Scenes.h"
 #include "TiledMap.h"
 
 namespace Client

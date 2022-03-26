@@ -5,6 +5,7 @@
 #include "TiledTile.h"
 #include "Sprite.h"
 #include "TiledUnit.h"
+#include "Cogollo.h"
 
 namespace Client
 {
@@ -12,7 +13,7 @@ TiledScene::TiledScene() :
 	Scene(SceneID::PacMan),
 	_map(make_unique<TiledMap>("default.txt"))
 {
-
+	AddObject(make_unique<Cogollo>());
 }
 
 TiledScene::~TiledScene()

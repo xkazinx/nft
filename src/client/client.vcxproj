@@ -238,6 +238,8 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="Cogollo.h" />
+    <ClInclude Include="GenScene.h" />
+    <ClInclude Include="NFT.h" />
     <ClInclude Include="TiledBomb.h" />
     <ClInclude Include="TiledMap.h" />
     <ClInclude Include="TiledScene.h" />
@@ -254,7 +256,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="TiledTile.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneMgr.h" />
+    <ClInclude Include="Scenes.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="targetver.h" />
@@ -263,10 +265,14 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\LIBPATH\kazin\include\kazin\command_arguments.cpp" />
     <ClCompile Include="..\..\..\..\LIBPATH\kazin\include\kazin\console\log.cpp" />
+    <ClCompile Include="..\..\..\..\LIBPATH\kazin\include\kazin\file.cpp" />
+    <ClCompile Include="..\..\..\..\LIBPATH\kazin\include\kazin\process.cpp" />
     <ClCompile Include="..\..\..\..\LIBPATH\kazin\include\kazin\random.cpp" />
     <ClCompile Include="..\..\..\..\LIBPATH\kazin\include\kazin\time.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Cogollo.cpp" />
+    <ClCompile Include="GenScene.cpp" />
+    <ClCompile Include="NFT.cpp" />
     <ClCompile Include="TiledBomb.cpp" />
     <ClCompile Include="TiledMap.cpp" />
     <ClCompile Include="TiledScene.cpp" />
@@ -282,7 +288,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="TiledTile.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SceneMgr.cpp" />
+    <ClCompile Include="Scenes.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

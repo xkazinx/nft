@@ -30,6 +30,7 @@ public:
 		Object(ObjectType::Sprite, "Sprite"),
 		_sprite(sprite)
 	{
+		kazin::Log::Debug("Created sprite by copy");
 	}
 
 	Sprite(const string & texture_id) :

@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "Global.h"
-#include "SceneMgr.h"
+#include "Scenes.h"
 #include "App.h"
 #include "Sprite.h"
 
 namespace Client::Global
 {
 App *                  g_app;
-unique_ptr<SceneMgr>   g_scene;
+unique_ptr<Scenes>   g_scenes;
 u16                    g_res_x = 1024, g_res_y = 768;
 
 void Initialize()
@@ -16,7 +16,7 @@ void Initialize()
 
 	// ordered
 	Sprite::Initialize();
-	g_scene = make_unique<SceneMgr>();
+	g_scenes = make_unique<Scenes>();
 }
 
 void Deinitialize()

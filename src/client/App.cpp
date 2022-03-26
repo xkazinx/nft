@@ -2,7 +2,7 @@
 
 // nft
 #include "App.h"
-#include "SceneMgr.h"
+#include "Scenes.h"
 
 #ifdef LIVEPP
 #include <LPP_API.h>
@@ -100,7 +100,7 @@ int App::Tick()
 			break;
 
 		{
-			g_scene->Tick();
+			g_scenes->Tick();
 
 			ImGui::SFML::Update(_window, delta_clock.restart());
 		}
@@ -109,7 +109,7 @@ int App::Tick()
 			_window.clear(sf::Color::Black);
 
 			{
-				g_scene->Render(_window, {});
+				g_scenes->Render(_window, {});
 
 				ImGui::SFML::Render(_window);
 			}
@@ -143,7 +143,7 @@ bool App::HandleEvents()
 		}
 		else
 		{
-			if(g_scene->HandleEvent(ev))
+			if(g_scenes->HandleEvent(ev))
 				return true;
 		}
 	}

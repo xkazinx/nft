@@ -58,7 +58,7 @@
     <ClCompile Include="Scene.cpp">
       <Filter>scene</Filter>
     </ClCompile>
-    <ClCompile Include="SceneMgr.cpp">
+    <ClCompile Include="Scenes.cpp">
       <Filter>scene</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\LIBPATH\kazin\include\kazin\time.cpp">
@@ -74,6 +74,18 @@
       <Filter>dep</Filter>
     </ClCompile>
     <ClCompile Include="Cogollo.cpp">
+      <Filter>scene\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\LIBPATH\kazin\include\kazin\file.cpp">
+      <Filter>dep</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\LIBPATH\kazin\include\kazin\process.cpp">
+      <Filter>dep</Filter>
+    </ClCompile>
+    <ClCompile Include="GenScene.cpp">
+      <Filter>scene\gen</Filter>
+    </ClCompile>
+    <ClCompile Include="NFT.cpp">
       <Filter>scene\common</Filter>
     </ClCompile>
   </ItemGroup>
@@ -141,10 +153,16 @@
     <ClInclude Include="Scene.h">
       <Filter>scene</Filter>
     </ClInclude>
-    <ClInclude Include="SceneMgr.h">
+    <ClInclude Include="Scenes.h">
       <Filter>scene</Filter>
     </ClInclude>
     <ClInclude Include="Cogollo.h">
+      <Filter>scene\common</Filter>
+    </ClInclude>
+    <ClInclude Include="GenScene.h">
+      <Filter>scene\gen</Filter>
+    </ClInclude>
+    <ClInclude Include="NFT.h">
       <Filter>scene\common</Filter>
     </ClInclude>
   </ItemGroup>
@@ -169,6 +187,9 @@
     </Filter>
     <Filter Include="scene\tiled">
       <UniqueIdentifier>{8eee2b95-b9b7-46c6-b084-8b384190b380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\gen">
+      <UniqueIdentifier>{e259cd5f-3b29-4e42-b940-a6e930c18b1e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

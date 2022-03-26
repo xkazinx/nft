@@ -1,112 +1,51 @@
 #include "pch.h"
-#include "Object.h"
-#include "Scene.h"
-#include "TiledScene.h"
+#include "Cogollo.h"
 #include "Sprite.h"
 
 namespace Client
 {
-Object::Object(const Type type, const string & id):
-	_type(type)
+Cogollo::Cogollo() :
+	NFT("cogollo", NFT_Type::Main)
 {
-	static UID uid_ = 0;
-
-	_uid = uid_++;
-
-	if(id.empty())
-		SetID(format("{}_{}", enum_name(type), _uid));
-	else
-		SetID(id);
-
 	OnHotpatch();
 }
 
-Object::Object(const Object & object)
+Cogollo::~Cogollo()
 {
-	for(auto & child : object._objects)
-		_objects.emplace_back(make_unique<Object>(*child.get()));
 }
 
-Object::~Object()
+void Cogollo::OnHotpatch()
 {
-	kazin::Log::Debug("~Object({})", _id);
+	Object::OnHotpatch();
 }
 
-void Object::OnHotpatch()
+void Cogollo::Tick()
 {
-	UpdatePosition();
-
-	for(auto & object : _objects)
-		object->OnHotpatch();
+	Object::Tick();
 }
 
-void Object::Tick()
+void Cogollo::Render(sf::RenderTarget & tgt, sf::RenderStates states)
 {
-	for(auto & object : _objects)
-		object->Tick();
+	Object::Render(tgt, states);
 }
 
-void Object::Render(sf::RenderTarget & tgt, sf::RenderStates states)
+bool Cogollo::HandleEvent(const sf::Event & ev)
 {
-	for(auto & object : _objects)
-		object->Render(tgt, states);
+	return Object::HandleEvent(ev);
 }
 
-bool Object::HandleEvent(const sf::Event & ev)
+void Cogollo::SetPosition(Vector2f pos, bool update)
 {
-	for(auto & object : _objects)
-		if(object->HandleEvent(ev))
-			return true;
-
-	return false;
+	Object::SetPosition(pos, update);
 }
 
-void Object::SetPosition(Vector2f pos, bool update)
+void Cogollo::UpdatePosition()
 {
-	for(auto & object : _objects)
-		object->SetPosition(pos, update);
-
-	if(update)
-	{
-		UpdatePosition();
-
-		for(auto & object : _objects)
-			object->UpdatePosition();
-	}
+	Object::UpdatePosition();
 }
 
-void Object::Move(Vector2f pos)
+void Cogollo::Move(Vector2f pos)
 {
-	UpdatePosition();
-
-	for(auto & object : _objects)
-	{
-		object->Move(pos);
-		object->UpdatePosition();
-	}
-}
-
-Object * Object::AddObject(Value object)
-{
-	_objects.emplace_back(std::move(object));
-
-	return _objects.back().get();
-}
-
-void Object::RemoveObject(const string & id)
-{
-	std::erase_if(
-		_objects,
-		[&](const auto & object)
-		{
-			return object->_id == id;
-		}
-	);
-}
-
-void Object::UpdatePosition()
-{
-	for(auto & object : _objects)
-		object->UpdatePosition();
+	Object::Move(pos);
 }
 }

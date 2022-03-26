@@ -3,17 +3,16 @@
 namespace Client
 {
 class App;
-class SceneMgr;
+class Scenes;
 
 namespace Global
 {
-	constexpr char kAppName[] = "Rythme";
+	constexpr char kAppName[] = "NFTGEN";
 
-	extern App *                  g_app;
-	extern unique_ptr<SceneMgr>   g_scene;
-	extern u16                    g_res_x, g_res_y;
-
-	extern vector<sf::Font> g_fonts;
+	extern App *              g_app;
+	extern unique_ptr<Scenes> g_scenes;
+	extern u16                g_res_x, g_res_y;
+	extern vector<sf::Font>   g_fonts;
 
 	extern void Initialize();
 	extern void Deinitialize();
@@ -74,7 +73,7 @@ namespace Global
 			{
 				if(Fire(false))
 					return 0u;
-				
+
 				return u8((_trigger_tm - Now) * 100 / _ms);
 			}
 
@@ -88,7 +87,7 @@ namespace Global
 				_ms = ms;
 				Reset();
 			}
-			
+
 			Value _trigger_tm;
 			Value _ms;
 		};
@@ -100,6 +99,7 @@ namespace Global
 		{
 			Dummy,
 			PacMan,
+			Gen,
 
 			None = u8(-1),
 		};
@@ -108,16 +108,16 @@ namespace Global
 	enum class FormatType : u8
 	{
 		None,
-		bool_Switch,
 		// On, Off
-		bool_State,
+		bool_Switch,
 		// true, false
-		bool_Status,
+		bool_State,
 		// Enabled, Disabled
-		bool_Result,
+		bool_Status,
 		// Success, Failure
-		bool_Affirmation,
+		bool_Result,
 		// Yes, No
+		bool_Affirmation,
 	};
 
 	template<typename T>
@@ -222,11 +222,13 @@ namespace Global
 	{
 		Sprite,
 		Scene,
-		SceneMgr,
+		Scenes,
 		Map,
 		Tile,
 		Unit,
 		Object,
+		Cogollo,
+		NFT,
 	};
 
 	enum class DirectionID

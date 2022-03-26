@@ -8,8 +8,7 @@ public:
 	using Type = ObjectType;
 	using UID = u32;
 
-	Object(const Type type, const string & id);
-
+	Object(Type type, const string & id);
 	Object(const Object & object);
 
 	Type   _type{};
