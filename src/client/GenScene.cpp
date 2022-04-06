@@ -133,6 +133,7 @@ bool GenScene::HandleEvent(const sf::Event & ev)
 			break;
 		}
 	}
+
 	return Scene::HandleEvent(ev);
 }
 }

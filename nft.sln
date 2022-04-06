@@ -7,28 +7,37 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "src\client\client
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kazin", "kazin", "{ECAE81B3-8C8F-4EAD-9571-60D7E8072F5C}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\LIBPATH\kazin\include\kazin\auth.cpp = ..\..\LIBPATH\kazin\include\kazin\auth.cpp
 		..\..\LIBPATH\kazin\include\kazin\auth.h = ..\..\LIBPATH\kazin\include\kazin\auth.h
-		..\..\LIBPATH\kazin\include\kazin\command_arguments.cpp = ..\..\LIBPATH\kazin\include\kazin\command_arguments.cpp
 		..\..\LIBPATH\kazin\include\kazin\command_arguments.h = ..\..\LIBPATH\kazin\include\kazin\command_arguments.h
-		..\..\LIBPATH\kazin\include\kazin\container.cpp = ..\..\LIBPATH\kazin\include\kazin\container.cpp
 		..\..\LIBPATH\kazin\include\kazin\container.h = ..\..\LIBPATH\kazin\include\kazin\container.h
-		..\..\LIBPATH\kazin\include\kazin\file.cpp = ..\..\LIBPATH\kazin\include\kazin\file.cpp
 		..\..\LIBPATH\kazin\include\kazin\file.h = ..\..\LIBPATH\kazin\include\kazin\file.h
+		..\..\LIBPATH\kazin\include\kazin\kazin.h = ..\..\LIBPATH\kazin\include\kazin\kazin.h
+		..\..\LIBPATH\kazin\include\kazin\log.h = ..\..\LIBPATH\kazin\include\kazin\log.h
 		..\..\LIBPATH\kazin\include\kazin\magic_enum.h = ..\..\LIBPATH\kazin\include\kazin\magic_enum.h
-		..\..\LIBPATH\kazin\include\kazin\process.cpp = ..\..\LIBPATH\kazin\include\kazin\process.cpp
+		..\..\LIBPATH\kazin\include\kazin\net.h = ..\..\LIBPATH\kazin\include\kazin\net.h
+		..\..\LIBPATH\kazin\include\kazin\packet.h = ..\..\LIBPATH\kazin\include\kazin\packet.h
 		..\..\LIBPATH\kazin\include\kazin\process.h = ..\..\LIBPATH\kazin\include\kazin\process.h
-		..\..\LIBPATH\kazin\include\kazin\random.cpp = ..\..\LIBPATH\kazin\include\kazin\random.cpp
 		..\..\LIBPATH\kazin\include\kazin\random.h = ..\..\LIBPATH\kazin\include\kazin\random.h
-		..\..\LIBPATH\kazin\include\kazin\time.cpp = ..\..\LIBPATH\kazin\include\kazin\time.cpp
+		..\..\LIBPATH\kazin\include\kazin\rang.hpp = ..\..\LIBPATH\kazin\include\kazin\rang.hpp
+		..\..\LIBPATH\kazin\include\kazin\socket.h = ..\..\LIBPATH\kazin\include\kazin\socket.h
 		..\..\LIBPATH\kazin\include\kazin\time.h = ..\..\LIBPATH\kazin\include\kazin\time.h
+		..\..\LIBPATH\kazin\include\kazin\types.h = ..\..\LIBPATH\kazin\include\kazin\types.h
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "console", "console", "{8CFFEC06-27A4-466B-9262-1C2BB775F3A4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{63E60F37-304C-40E1-BAD2-232F6E0565BD}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\LIBPATH\kazin\include\kazin\console\log.cpp = ..\..\LIBPATH\kazin\include\kazin\console\log.cpp
-		..\..\LIBPATH\kazin\include\kazin\console\log.h = ..\..\LIBPATH\kazin\include\kazin\console\log.h
-		..\..\LIBPATH\kazin\include\kazin\console\rang.hpp = ..\..\LIBPATH\kazin\include\kazin\console\rang.hpp
+		..\..\LIBPATH\kazin\include\kazin\auth.cpp = ..\..\LIBPATH\kazin\include\kazin\auth.cpp
+		..\..\LIBPATH\kazin\include\kazin\command_arguments.cpp = ..\..\LIBPATH\kazin\include\kazin\command_arguments.cpp
+		..\..\LIBPATH\kazin\include\kazin\container.cpp = ..\..\LIBPATH\kazin\include\kazin\container.cpp
+		..\..\LIBPATH\kazin\include\kazin\file.cpp = ..\..\LIBPATH\kazin\include\kazin\file.cpp
+		..\..\LIBPATH\kazin\include\kazin\kazin.cpp = ..\..\LIBPATH\kazin\include\kazin\kazin.cpp
+		..\..\LIBPATH\kazin\include\kazin\log.cpp = ..\..\LIBPATH\kazin\include\kazin\log.cpp
+		..\..\LIBPATH\kazin\include\kazin\net.cpp = ..\..\LIBPATH\kazin\include\kazin\net.cpp
+		..\..\LIBPATH\kazin\include\kazin\packet.cpp = ..\..\LIBPATH\kazin\include\kazin\packet.cpp
+		..\..\LIBPATH\kazin\include\kazin\process.cpp = ..\..\LIBPATH\kazin\include\kazin\process.cpp
+		..\..\LIBPATH\kazin\include\kazin\random.cpp = ..\..\LIBPATH\kazin\include\kazin\random.cpp
+		..\..\LIBPATH\kazin\include\kazin\socket.cpp = ..\..\LIBPATH\kazin\include\kazin\socket.cpp
+		..\..\LIBPATH\kazin\include\kazin\time.cpp = ..\..\LIBPATH\kazin\include\kazin\time.cpp
 	EndProjectSection
 EndProject
 Global
@@ -52,7 +61,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{8CFFEC06-27A4-466B-9262-1C2BB775F3A4} = {ECAE81B3-8C8F-4EAD-9571-60D7E8072F5C}
+		{63E60F37-304C-40E1-BAD2-232F6E0565BD} = {ECAE81B3-8C8F-4EAD-9571-60D7E8072F5C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {091E0047-7422-446E-8C82-B50D52C2C0A2}

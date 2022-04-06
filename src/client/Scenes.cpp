@@ -9,7 +9,8 @@ namespace Client
 Scenes::Scenes() :
 	Object(ObjectType::Scenes, "Scenes")
 {
-	AddObject(make_unique<GenScene>());
+	//AddObject(make_unique<GenScene>());
+	AddObject(make_unique<TiledScene>());
 }
 
 Scenes::~Scenes()

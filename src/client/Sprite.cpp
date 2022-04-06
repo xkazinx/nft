@@ -54,7 +54,7 @@ void Sprite::Initialize()
 	{
 		if(ranges::find(exclude, path.string()) != exclude.end())
 		{
-			kazin::Print("Excluded Path: {}", path.string());
+			Print("Excluded Path: {}", path.string());
 			continue;
 		}
 
@@ -64,7 +64,7 @@ void Sprite::Initialize()
 		auto category_name = path.parent_path();
 		auto nft_name      = category_name.parent_path().filename();
 		category_name      = category_name.filename();
-		
+
 		auto & sprite = Sprite::Add(nft_name / category_name / path.filename());
 
 		if(!NFT::List.contains(nft_name.string()))
@@ -85,7 +85,7 @@ void Sprite::Initialize()
 		}
 
 		kazin::Log::Debug("Fetched Path: path({}) nft_name({}) category_name({})",
-			path.string(), nft_name.string(), category_name.string());
+		                  path.string(), nft_name.string(), category_name.string());
 	}
 }
 

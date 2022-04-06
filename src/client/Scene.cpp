@@ -31,6 +31,6 @@ bool Scene::HandleEvent([[maybe_unused]] const sf::Event & ev)
 
 void Scene::OnHotpatch()
 {
-	Object::OnHotpatch();
-}
+		Object::OnHotpatch();
+	}
 }
