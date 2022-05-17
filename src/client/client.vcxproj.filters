@@ -88,9 +88,6 @@
     <ClCompile Include="..\..\..\..\LIBPATH\kazin\include\kazin\packet.cpp">
       <Filter>app\dep\kazin</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\LIBPATH\kazin\include\kazin\process.cpp">
-      <Filter>app\dep\kazin</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\LIBPATH\kazin\include\kazin\random.cpp">
       <Filter>app\dep\kazin</Filter>
     </ClCompile>

@@ -2,16 +2,16 @@
 
 namespace Client
 {
-class App final
+class App final : kazin::app::Base
 {
 public:
 	App();
-	~App();
+	~App() override;
 
 	RenderWindow _window{};
-	HMODULE      _livePP;
+	
+	int  Tick() override;
 
-	int  Tick();
 	bool HandleEvents();
 	void ToggleConsole();
 

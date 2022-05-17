@@ -23,13 +23,8 @@ LPP_POSTPATCH_HOOK(lppPostPatch);
 
 namespace Client
 {
-App::App() // NOLINT(cppcoreguidelines-pro-type-member-init)
+App::App() : kazin::app::Base(kAppName)
 {
-#ifdef LIVEPP
-	_livePP = lpp::lppLoadAndRegister(L"D:\\LIBPATH\\LivePP", "nft");
-	lpp::lppEnableAllCallingModulesAsync(_livePP);
-#endif
-
 	g_app = this;
 
 	Global::Initialize();
@@ -38,17 +33,11 @@ App::App() // NOLINT(cppcoreguidelines-pro-type-member-init)
 
 	ImGui::SFML::Init(_window);
 }
-
-App::~App() // NOLINT(modernize-use-equals-default)
+App::~App()
 {
 	ImGui::SFML::Shutdown();
 
 	Global::Deinitialize();
-
-#ifdef LIVEPP
-	lpp::lppShutdown(_livePP);
-	::FreeLibrary(_livePP);
-#endif
 }
 
 void App::ToggleConsole()
@@ -61,7 +50,6 @@ void App::ToggleConsole()
 
 	ShowWindow(hwnd, state);
 }
-
 void App::InitializeWindow([[maybe_unused]] const u16 res_x, [[maybe_unused]] u16 res_y)
 {
 	ContextSettings settings;
@@ -82,7 +70,6 @@ void App::InitializeWindow([[maybe_unused]] const u16 res_x, [[maybe_unused]] u1
 
 	AdjustViewport(_window.getSize().x, _window.getSize().y);
 }
-
 void App::AdjustViewport(const GLsizei & x, const GLsizei & y)
 {
 	glViewport(0, 0, x, y);
@@ -94,12 +81,14 @@ int App::Tick()
 
 	while(_window.isOpen())
 	{
+		// #todo move to kazin lib
 		time::Tick();
 
 		if(!HandleEvents())
 			break;
 
 		{
+			// #todo make scenes in kazin lib and scene base
 			g_scenes->Tick();
 
 			ImGui::SFML::Update(_window, delta_clock.restart());
