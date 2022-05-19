@@ -102,7 +102,7 @@ bool GenScene::HandleEvent(const sf::Event & ev)
 					{ NFT::List["cogollo"].get() }
 				));*/
 				
-				Sprite* test_spr = nullptr;
+				Sprite* first_spr = nullptr;
 
 				for(auto & object : obj->_objects)
 				{
@@ -124,33 +124,35 @@ bool GenScene::HandleEvent(const sf::Event & ev)
 							if(sprite->_type != ObjectType::Sprite)
 								continue;
 
-							((Sprite*)sprite.get())->_sprite.setColor(Random::Color());
+							auto * spr = ((Sprite*)sprite.get());
+							auto & sf_spr = spr->_sprite;
 
-							if (!test_spr)
-								test_spr = ((Sprite*)sprite.get());
-
-							/*auto size = ((Sprite*)sprite.get())->_sprite.getTexture()->getSize();*/
+							sf_spr.setColor(Random::Color());
 							
+							if (!first_spr)
+								first_spr = ((Sprite*)sprite.get());
 						}
 					}
 				}
+
+				Vector2f scale = { .20f, .20f };
+				obj->SetScale(scale);
 				
-				obj->SetScale({ .33f, .33f });
+				obj->SetPosition({ 0.f, 0.f }, true);
 
-				// TODO: Center on screen regardless of scale and size
-				auto size = test_spr->_sprite.getTexture()->getSize();
 				
-				Print("size: {} {}", size.x, size.y);
-				size.x = size.x / 3.3f;
-				size.y = size.y / 3.3f;
+				auto grect = first_spr->_sprite.getGlobalBounds();
 
-				Print("size: {} {}", size.x, size.y);
+				sf::Vector2f gsize = {
+					grect.width,
+					grect.height
+				};
 
-				float pos_x = (g_res_x / 2) - (size.x / 2);
-				float pos_y = (g_res_y / 2) - (size.y / 2);
+				float pos_x = (g_res_x / 2) - (gsize.x / 2);
+				float pos_y = (g_res_y / 2) - (gsize.y / 2);
 
-				//obj->SetPosition({ 0.f, 0.f }, true);
 				obj->SetPosition({ pos_x, pos_y }, true);
+				
 			}
 			break;
 		}
