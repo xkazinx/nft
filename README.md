@@ -4,6 +4,8 @@ A 2D prototype (2022) on SFML and ImGui: a generator that layers random cogollo 
 (arms, body, face, feet) into a new character and tints each layer at random, and a
 tiled map where two cogollos walk and drop bombs.
 
+**Made without AI** until the first Claude commit (9ec6320, 2026-11-06); AI was used after that for the updated deployment and this README.
+
 **Try it in your browser: https://kazin.dev/projects/nft/**
 
 ![Four cogollos made by the generator, each from random parts in random colours](docs/screenshot.png)
