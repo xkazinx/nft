@@ -1,0 +1,16 @@
+[
+ {"wait": "NFTGEN ready: 22 pictures, scene PacMan", "timeout": 60},
+ {"sleep": 800},
+ {"shot": "tiled_start.png", "canvas": true},
+ {"click": [512, 384]},
+ {"key": "ArrowRight"}, {"sleep": 150},
+ {"key": "ArrowRight"}, {"sleep": 150},
+ {"key": "ArrowDown"}, {"sleep": 150},
+ {"type": "b"},
+ {"type": "aw"},
+ {"sleep": 300},
+ {"shot": "tiled_bomb.png", "canvas": true},
+ {"sleep": 1600},
+ {"shot": "tiled_moved.png", "canvas": true},
+ {"eval": "document.getElementById('status').textContent", "expect": "^\"\"$"}
+]

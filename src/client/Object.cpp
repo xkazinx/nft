@@ -63,9 +63,7 @@ Object::Object(const Object & object)
 }
 
 Object::~Object()
-{
-	kazin::Log::Debug("~Object({})", _id);
-}
+= default;
 
 void Object::OnHotpatch()
 {

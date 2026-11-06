@@ -4,12 +4,11 @@
 
 namespace Client
 {
-class TiledTile;
-class TiledUnit;
+struct TiledTile;
+struct TiledUnit;
 
-class TiledBomb final : public Object
+struct TiledBomb final : Object
 {
-public:
 	TiledBomb();
 	~TiledBomb() override;
 
@@ -19,14 +18,14 @@ public:
 	void OnHotpatch() override;
 	void SetPosition(Vector2f pos, bool update) override;
 	void Move(Vector2f pos) override;
+	using Object::UpdatePosition;
 	void UpdatePosition() override;
 
-public:
 	void UpdatePosition(const TiledUnit * unit);
 	void Explode();
 
 	sf::CircleShape _circle;
-	TiledUnit *    _unit = nullptr;
+	TiledUnit *     _unit = nullptr;
 
 	time::Timer _tm{ 1500 };
 };

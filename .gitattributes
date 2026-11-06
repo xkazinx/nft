@@ -1,0 +1,3 @@
+# Run on the Linux box (deploy/ubuntu/install.sh): LF always
+*.sh text eol=lf
+*.caddy text eol=lf

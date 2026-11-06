@@ -2,9 +2,8 @@
 
 namespace Client
 {
-class Object : public sf::Drawable
+struct Object : sf::Drawable
 {
-public:
 	using Type = ObjectType;
 	using UID = u32;
 
@@ -26,7 +25,6 @@ public:
 	virtual void Move(Vector2f pos);
 	virtual void SetScale(Vector2f value);
 
-public:
 	using Value = unique_ptr<Object>;
 	vector<Value> _objects;
 
@@ -55,7 +53,6 @@ public:
 		_id = id;
 	}
 
-protected:
 	void draw(sf::RenderTarget & target, sf::RenderStates states) const override
 	{
 		const_cast<Object*>(this)->Render(target, states);

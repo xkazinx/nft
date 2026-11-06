@@ -1,29 +1,13 @@
-#include <pch.h>
+#include "pch.h"
 
 // nft
 #include "App.h"
 #include "Scenes.h"
-
-#ifdef LIVEPP
-#include <LPP_API.h>
-
-void lppPrePatch()
-{
-}
-
-void lppPostPatch()
-{
-	Print("LivePP: Patch");
-	g_cmd->Setup();
-}
-
-LPP_PREPATCH_HOOK(lppPrePatch);
-LPP_POSTPATCH_HOOK(lppPostPatch);
-#endif
+#include "Sprite.h"
 
 namespace Client
 {
-App::App() : kazin::app::Base(kAppName)
+App::App()
 {
 	g_app = this;
 
@@ -31,82 +15,88 @@ App::App() : kazin::app::Base(kAppName)
 
 	InitializeWindow(g_res_x, g_res_y);
 
-	ImGui::SFML::Init(_window);
+#if NFT_IMGUI
+	lib::imgui::Init(_window);
+#endif
+
+	// (the web test waits for this line)
+	Info("{} ready: {} pictures, scene {}", kAppName, Sprite::List.size(), enum_name(g_scenes->_scene->_id));
 }
 App::~App()
 {
-	ImGui::SFML::Shutdown();
+#if NFT_IMGUI
+	lib::imgui::Shutdown();
+#endif
 
 	Global::Deinitialize();
 }
 
-void App::ToggleConsole()
-{
-	const HWND hwnd  = GetConsoleWindow();
-	int        state = SW_SHOW;
-
-	if(::IsWindowVisible(hwnd))
-		state = SW_HIDE;
-
-	ShowWindow(hwnd, state);
-}
 void App::InitializeWindow([[maybe_unused]] const u16 res_x, [[maybe_unused]] u16 res_y)
 {
 	ContextSettings settings;
 	{
 		settings.depthBits         = 0;
 		settings.stencilBits       = 0;
-		settings.antialiasingLevel = 0;
+		settings.antiAliasingLevel = 0;
+#ifndef __EMSCRIPTEN__ // a browser gets its WebGL2 context
 		settings.majorVersion      = 3;
 		settings.minorVersion      = 2;
+#endif
 	}
 
-	_window.create(VideoMode(g_res_x, g_res_y), kAppName, sf::Style::None, settings);
+	_window.create(VideoMode({ g_res_x, g_res_y }), kAppName, sf::Style::None, sf::State::Windowed, settings);
 
 	_window.setVisible(true);
-	_window.setActive(true);
+	if(!_window.setActive(true))
+		Warn("the window's OpenGL context could not be made current");
+#ifndef __EMSCRIPTEN__ // a browser paces display() by its animation frames
 	_window.setVerticalSyncEnabled(true);
 	_window.setFramerateLimit(120);
-
-	AdjustViewport(_window.getSize().x, _window.getSize().y);
+#endif
 }
-void App::AdjustViewport(const GLsizei & x, const GLsizei & y)
+
+bool App::Frame()
 {
-	glViewport(0, 0, x, y);
+	time::Tick();
+
+	if(!HandleEvents())
+		return false;
+
+	{
+		g_scenes->Tick();
+
+#if NFT_IMGUI
+		ImGui::SFML::Update(_window, _delta_clock.restart());
+#endif
+	}
+
+	{
+		_window.clear(sf::Color::Black);
+
+		{
+			g_scenes->Render(_window, {});
+
+#if NFT_IMGUI
+			lib::imgui::End(_window);
+#endif
+		}
+
+		_window.display();
+	}
+
+	return true;
 }
 
 int App::Tick()
 {
-	sf::Clock delta_clock;
-
 	while(_window.isOpen())
 	{
-		// #todo move to kazin lib
-		time::Tick();
-
-		if(!HandleEvents())
+		if(!Frame())
 			break;
 
-		{
-			// #todo make scenes in kazin lib and scene base
-			g_scenes->Tick();
-
-			ImGui::SFML::Update(_window, delta_clock.restart());
-		}
-
-		{
-			_window.clear(sf::Color::Black);
-
-			{
-				g_scenes->Render(_window, {});
-
-				ImGui::SFML::Render(_window);
-			}
-
-			_window.display();
-		}
-
+#ifndef __EMSCRIPTEN__ // in a browser display() already yielded to the page
 		this_thread::sleep_for(std::chrono::milliseconds(1));
+#endif
 	}
 
 	return 0;
@@ -114,25 +104,23 @@ int App::Tick()
 
 bool App::HandleEvents()
 {
-	sf::Event ev;
-
-	while(_window.pollEvent(ev))
+	while(const optional<sf::Event> ev = _window.pollEvent())
 	{
-		ImGui::SFML::ProcessEvent(ev);
+#if NFT_IMGUI
+		ImGui::SFML::ProcessEvent(*ev);
+#endif
 
-		if(ev.type == sf::Event::Closed)
+		if(ev->is<sf::Event::Closed>())
 		{
 			_window.close();
 			return false;
 		}
 
-		if(ev.type == sf::Event::Resized)
+		// (Resized: SFML 3 sets the viewport from the view on every draw; the old
+		// glViewport call is gone)
+		if(!ev->is<sf::Event::Resized>())
 		{
-			AdjustViewport(ev.size.width, ev.size.height);
-		}
-		else
-		{
-			if(g_scenes->HandleEvent(ev))
+			if(g_scenes->HandleEvent(*ev))
 				return true;
 		}
 	}

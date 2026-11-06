@@ -3,19 +3,20 @@
 
 namespace Client
 {
-class TiledMap;
-class Sprite;
+struct TiledMap;
+struct Sprite;
 
-class TiledScene final : public Scene
+struct TiledScene final : Scene
 {
-public:
 	TiledScene();
 	~TiledScene() override;
 
 	void OnHotpatch() override;
 	void Tick() override;
+	using Scene::Render;
 	void Render(sf::RenderTarget & tgt, sf::RenderStates states) override;
 	void RenderUI() override;
+	using Scene::HandleEvent;
 	bool HandleEvent(const sf::Event & ev) override;
 
 	unique_ptr<TiledMap> _map{};

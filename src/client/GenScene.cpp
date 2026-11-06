@@ -8,6 +8,8 @@ namespace Client
 GenScene::GenScene() :
 	Scene(SceneID::Gen)
 {
+	_keys = "C: a new random cogollo   "s + kNextSceneKeys;
+
 	OnHotpatch();
 }
 
@@ -31,6 +33,7 @@ void GenScene::Move(Vector2f pos)
 
 void GenScene::RenderUI()
 {
+#if NFT_IMGUI
 	{
 		ImGui::Begin("My First Tool", &my_tool_active, ImGuiWindowFlags_MenuBar);
 		ImGui::SetWindowPos({0.f, 0.f});
@@ -65,6 +68,7 @@ void GenScene::RenderUI()
 		
 		ImGui::End();
 	}
+#endif
 
 	Scene::RenderUI();
 }
@@ -86,15 +90,16 @@ void GenScene::Render(sf::RenderTarget & tgt, sf::RenderStates states)
 
 bool GenScene::HandleEvent(const sf::Event & ev)
 {
-	if(ev.type == sf::Event::KeyPressed)
+	if(ev.is<sf::Event::KeyPressed>())
 	{
-		switch(ev.key.code)
+		switch(KeyPressed(ev))
 		{
 			using enum sf::Keyboard::Key;
 
 		case C:
 			_objects.clear();
 
+			if(NFT::List.contains("cogollo"))
 			{
 				auto obj = AddObject(NFT::List["cogollo"]->GenerateRandom());
 
@@ -127,7 +132,7 @@ bool GenScene::HandleEvent(const sf::Event & ev)
 							auto * spr = ((Sprite*)sprite.get());
 							auto & sf_spr = spr->_sprite;
 
-							sf_spr.setColor(Random::Color());
+							sf_spr.setColor(color::GetRandom());
 							
 							if (!first_spr)
 								first_spr = ((Sprite*)sprite.get());
@@ -140,16 +145,14 @@ bool GenScene::HandleEvent(const sf::Event & ev)
 				
 				obj->SetPosition({ 0.f, 0.f }, true);
 
-				
+				if(!first_spr)
+					break;
+
 				auto grect = first_spr->_sprite.getGlobalBounds();
 
-				sf::Vector2f gsize = {
-					grect.width,
-					grect.height
-				};
+				sf::Vector2f gsize = grect.size;
 
-				float pos_x = (g_res_x / 2) - (gsize.x / 2);
-				float pos_y = (g_res_y / 2) - (gsize.y / 2);
+				float pos_x = (g_res_x / 2) - (gsize.x / 2);				float pos_y = (g_res_y / 2) - (gsize.y / 2);
 
 				obj->SetPosition({ pos_x, pos_y }, true);
 				

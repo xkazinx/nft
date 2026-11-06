@@ -31,9 +31,12 @@ TiledMap::TiledMap(const string & map_name) :
 	}
 }
 
+TiledMap::~TiledMap()
+= default;
+
 TiledUnit * TiledMap::AddUnit(unique_ptr<TiledUnit> unit)
 {
-	auto object = AddObject(make_unique<Sprite>(*Sprite::List["cogollo\\full\\1.png"].get()));
+	auto object = AddObject(make_unique<Sprite>(*Sprite::List["cogollo/full/1.png"].get()));
 
 	((Sprite*)object)->SetID(unit->_name);
 
@@ -51,11 +54,11 @@ bool TiledMap::Load(const string & map_name)
 		return false;
 
 	szt idx = 0;
-	while(!file.eof())
+	string data;
+	// (was `while(!eof) file >> data`: the read past the last word made one more
+	// tile from an empty word, its flags read past the string's end)
+	while(file >> data)
 	{
-		string data;
-		file >> data;
-
 		switch(idx++)
 		{
 		case 0:

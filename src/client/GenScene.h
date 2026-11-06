@@ -3,9 +3,8 @@
 
 namespace Client
 {
-class GenScene final : public Scene
+struct GenScene final : Scene
 {
-public:
 	GenScene();
 	~GenScene() override;
 	void SetPosition(Vector2f pos, bool update) override;
@@ -14,7 +13,9 @@ public:
 	void RenderUI() override;
 	void OnHotpatch() override;
 	void Tick() override;
+	using Scene::Render;
 	void Render(sf::RenderTarget & tgt, sf::RenderStates states) override;
+	using Scene::HandleEvent;
 	bool HandleEvent(const sf::Event & ev) override;
 
 	bool my_tool_active = true;

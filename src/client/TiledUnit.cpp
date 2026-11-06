@@ -13,7 +13,7 @@ TiledUnit::TiledUnit(const string & name):
 	Object(ObjectType::Unit, "TiledUnit"),
 	_name(name)
 {
-	AddObject(make_unique<Sprite>(*Sprite::List["cogollo\\full\\2.png"].get()))
+	AddObject(make_unique<Sprite>(*Sprite::List["cogollo/full/2.png"].get()))
 			->SetID(_name);
 
 	OnHotpatch();
@@ -31,12 +31,12 @@ void TiledUnit::Tick()
 
 bool TiledUnit::HandleEvent(const sf::Event & ev)
 {
-	if(ev.type == sf::Event::KeyPressed)
+	if(ev.is<sf::Event::KeyPressed>())
 	{
 		using enum sf::Keyboard::Key;
 		if(_self)
 		{
-			switch(ev.key.code)
+			switch(KeyPressed(ev))
 			{
 			case Left:
 				Move(DirectionID::West);
@@ -63,7 +63,7 @@ bool TiledUnit::HandleEvent(const sf::Event & ev)
 		}
 		else
 		{
-			switch(ev.key.code)
+			switch(KeyPressed(ev))
 			{
 			case A:
 				Move(DirectionID::West);
@@ -116,21 +116,17 @@ void TiledUnit::OnHotpatch()
 {
 	auto obj = FindObject<Sprite>(_name);
 	if(!obj)
-	{
-		kazin::Log::Debug("obj NOT FOUND!");
 		return;
-	}
 
 	auto & sprite = obj->_sprite;
 
 	constexpr auto kScale = 0.032f;
-	sprite.setScale(kScale, kScale);
+	sprite.setScale({ kScale, kScale });
 
 	if(_self)
 		sprite.setColor(sf::Color::White);
 	else
 		sprite.setColor(sf::Color(200, 100, 100));
-	kazin::Log::Debug("TiledUnit::OnHotpatch");
 	Object::OnHotpatch();
 }
 
@@ -138,7 +134,6 @@ void TiledUnit::UpdatePosition()
 {
 	if(!_map)
 		return;
-	kazin::Log::Debug("TiledUnit::UpdatePosition");
 	Object::SetPosition(
 	{
 				_map->_origin.x + (_tile->_pos.x * kTileSize),
@@ -154,10 +149,7 @@ void TiledUnit::Move(DirectionID dir)
 	auto pos = _tile->_pos + direction::Delta<Vector2i>(dir);
 	if(pos.x >= _map->_size.x || pos.x < 0 ||
 		pos.y >= _map->_size.y || pos.y < 0)
-	{
-		kazin::Log::Debug("Returned {}", enum_integer(dir));
 		return;
-	}
 	
 	_map->SetUnit(this, pos);
 }

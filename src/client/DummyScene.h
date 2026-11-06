@@ -3,16 +3,17 @@
 
 namespace Client
 {
-class DummyScene final : public Scene
+struct DummyScene final : Scene
 {
-public:
 	DummyScene();
 	~DummyScene() override;
 
 	void OnHotpatch() override;
 	void Tick() override;
+	using Scene::Render;
 	void Render(sf::RenderTarget & tgt, sf::RenderStates states) override;
 	void RenderUI() override;
+	using Scene::HandleEvent;
 	bool HandleEvent(const sf::Event & ev) override;
 };
 }

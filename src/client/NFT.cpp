@@ -94,13 +94,13 @@ unique_ptr<NFT> NFT::GenerateRandom()
 		if(category->_objects.empty())
 			continue;
 
-		auto & chosen = Random::Gen(category->_objects);
+		const Object * const chosen = g_rand.Roll(category->_objects).get();
 
-		erase_if(
+		std::erase_if(
 			category->_objects,
 			[&](auto & obj)
 			{
-				return obj != chosen;
+				return obj.get() != chosen;
 			}
 		);
 	}

@@ -21,7 +21,7 @@ TiledTile::TiledTile(const string & data) :
 {
 	szt i = 0;
 	for(auto flag : enum_values<tile::Flag>())
-		if(data[i++] == '1')
+		if(i < data.size() && data[i++] == '1')
 			_flag |= flag;
 
 	OnHotpatch();
@@ -65,7 +65,6 @@ void TiledTile::SetPosition(Vector2f pos, bool update)
 {
 	_square.setPosition(pos);
 
-	kazin::Log::Debug("pos{} {}", pos.x, pos.y);
 	if(update && _unit)
 		_unit->UpdatePosition();
 

@@ -75,7 +75,6 @@ void TiledBomb::Move(Vector2f pos)
 
 void TiledBomb::UpdatePosition(const TiledUnit * unit)
 {
-	kazin::Log::Error("TiledBomb::UpdatePosition");
 	SetPosition({unit->_map->_origin.x + unit->_tile->_pos.x * kTileSize + (kTileSize / 4),
 		unit->_map->_origin.y + unit->_tile->_pos.y * kTileSize + (kTileSize / 4)}, false);
 }

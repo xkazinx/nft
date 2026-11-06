@@ -9,9 +9,9 @@ unordered_map<string, Texture>            Sprite::Textures;
 
 unique_ptr<Sprite> & Sprite::Add(const Path & file)
 {
-	List.insert({ file.string(), make_unique<Sprite>(file) });
+	List.insert({ file.generic_string(), make_unique<Sprite>(file) });
 
-	return List[file.string()];
+	return List[file.generic_string()];
 }
 
 Texture & Sprite::GetTexture(const string & texture_name)
@@ -19,7 +19,8 @@ Texture & Sprite::GetTexture(const string & texture_name)
 	if(!Textures.contains(texture_name))
 	{
 		Textures.insert({ texture_name, Texture{} });
-		Textures[texture_name].loadFromFile((path::DataDir / texture_name).string());
+		if(!Textures[texture_name].loadFromFile((path::DataDir / texture_name).string()))
+			Warn("texture {} not loaded", texture_name);
 	}
 
 	return Textures[texture_name];
@@ -29,9 +30,9 @@ void Sprite::Initialize()
 {
 	vector<string> exclude;
 
+	if(ifstream f("configs.json"); f)
 	{
-		ifstream f("configs.json");
-		json     j;
+		json j;
 		f >> j;
 
 		path::DataDir = j.value<string>("data_dir", path::DataDir.string());
@@ -44,17 +45,24 @@ void Sprite::Initialize()
 
 	const Path data_path = "data";
 	const Path src       = std::filesystem::current_path() / data_path;
-	auto       src_str   = src.string();
-	const auto src_sz    = src_str.size();
 
+	// Every file under data\ (was kazin::file::Fetch), sorted: the categories and
+	// their files in the same order on every system (a browser's file system lists
+	// them in another order than NTFS)
 	vector<Path> paths;
-	kazin::file::Fetch(src, paths);
+	{
+		std::error_code ec;
+		for(std::filesystem::recursive_directory_iterator it(src, ec), end; !ec && it != end; it.increment(ec))
+			if(it->is_regular_file())
+				paths += it->path();
+	}
+	ranges::sort(paths);
 
 	for(auto & path : paths)
 	{
 		if(ranges::find(exclude, path.string()) != exclude.end())
 		{
-			Print("Excluded Path: {}", path.string());
+			Info("Excluded Path: {}", path.string());
 			continue;
 		}
 
@@ -77,15 +85,14 @@ void Sprite::Initialize()
 		{
 			auto asset = category->AddObject(make_unique<NFT>(path.filename().string(), NFT_Type::Asset));
 
-			auto spr = asset->AddObject(make_unique<Sprite>(*sprite.get()));
+			asset->AddObject(make_unique<Sprite>(*sprite.get()));
 		}
 		else
 		{
+			// (as in 2022: a category's first file only makes the category; it is
+			// no asset of it. to-resolve.md)
 			nft->AddObject(make_unique<NFT>(category_name.string(), NFT_Type::Category));
 		}
-
-		kazin::Log::Debug("Fetched Path: path({}) nft_name({}) category_name({})",
-		                  path.string(), nft_name.string(), category_name.string());
 	}
 }
 

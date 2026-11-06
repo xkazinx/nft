@@ -12,7 +12,7 @@ TiledScene::TiledScene() :
 	Scene(SceneID::PacMan),
 	_map(make_unique<TiledMap>("default.txt"))
 {
-
+	_keys = "Arrows + B: one cogollo   WASD + Right Shift: the other   Ctrl+Arrows: the map   "s + kNextSceneKeys;
 }
 
 TiledScene::~TiledScene()
@@ -21,7 +21,7 @@ TiledScene::~TiledScene()
 void TiledScene::OnHotpatch()
 {
 	_map->OnHotpatch();
-	
+
 	Scene::OnHotpatch();
 }
 
@@ -30,8 +30,6 @@ void TiledScene::Tick()
 	Scene::Tick();
 
 	_map->Tick();
-
-	[[maybe_unused]] const auto pos = sf::Mouse::getPosition();
 }
 
 void TiledScene::RenderUI()
@@ -48,31 +46,28 @@ void TiledScene::Render(sf::RenderTarget & tgt, sf::RenderStates states)
 
 bool TiledScene::HandleEvent(const sf::Event & ev)
 {
-	if(ev.type == sf::Event::KeyPressed)
+	if(CtrlHeld(ev))
 	{
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+		switch(KeyPressed(ev))
 		{
-			switch(ev.key.code)
-			{
-				using enum sf::Keyboard::Key;
-			case Left:
-				_map->Move({ -kTileSize, 0 });
-				return true;
+			using enum sf::Keyboard::Key;
+		case Left:
+			_map->Move({ -kTileSize, 0 });
+			return true;
 
-			case Up:
-				_map->Move({ 0, -kTileSize });
-				return true;
+		case Up:
+			_map->Move({ 0, -kTileSize });
+			return true;
 
-			case Right:
-				_map->Move({ kTileSize, 0 });
-				return true;
+		case Right:
+			_map->Move({ kTileSize, 0 });
+			return true;
 
-			case Down:
-				_map->Move({ 0, kTileSize });
-				return true;
+		case Down:
+			_map->Move({ 0, kTileSize });
+			return true;
 
-			default: ;
-			}
+		default: ;
 		}
 	}
 

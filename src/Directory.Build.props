@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Every project under src\ (client, kazilib) builds with the 64-bit-hosted
+  compiler, linker and librarian (bin\HostX64\x86) and produces x86 (Win32) exes
+  and libs.
+
+  KaziVersion: kazilib (src\dep\kazilib\kazilib.vcxproj) builds its ml version,
+  which needs only SFML's headers (src\dep\SFML-3.1.0, a junction made by setup.ps1).
+-->
+<Project>
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <KaziVersion>ml</KaziVersion>
+    <KaziDep>$(MSBuildThisFileDirectory)dep\</KaziDep>
+    <NftDep>$(MSBuildThisFileDirectory)dep\</NftDep>
+    <NftSfml>$(NftDep)SFML-3.1.0\</NftSfml>
+    <NftKazilib>$(NftDep)kazilib\</NftKazilib>
+  </PropertyGroup>
+</Project>

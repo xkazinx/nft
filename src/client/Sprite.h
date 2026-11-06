@@ -3,9 +3,9 @@
 
 namespace Client
 {
-class Sprite final : public Object
+struct Sprite final : Object
 {
-public:
+	// By "<nft>/<category>/<file>.png" ('/' on every system)
 	static unordered_map<string, unique_ptr<Sprite>> List;
 	static unordered_map<string, Texture>            Textures;
 
@@ -16,12 +16,7 @@ public:
 	static void Initialize();
 	static void Deinitialize();
 
-public:
-	Sprite() :
-		Object(ObjectType::Sprite, "Sprite")
-	{
-	}
-
+	// (SFML 3: a sprite is made with its texture, so there is no empty one)
 	Sprite(const Sprite & sprite) :
 		Object(sprite),
 		_sprite(sprite._sprite)
@@ -30,7 +25,7 @@ public:
 
 	Sprite(const Path & file) :
 		Object(ObjectType::Sprite, "Sprite"),
-		_sprite(GetTexture(file.string()))
+		_sprite(GetTexture(file.generic_string()))
 	{
 	}
 
@@ -44,7 +39,6 @@ public:
 		Object(ObjectType::Sprite, "Sprite"),
 		_sprite(sprite)
 	{
-		kazin::Log::Debug("Created sprite by copy");
 	}
 
 	Sprite(const string & texture_id) :
@@ -55,7 +49,6 @@ public:
 
 	~Sprite() override;
 
-public:
 	void Render(sf::RenderTarget & tgt, sf::RenderStates states) override;
 	void Tick() override;
 	bool HandleEvent(const sf::Event & ev) override;

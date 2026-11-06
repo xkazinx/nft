@@ -10,9 +10,8 @@ enum class NFT_Type
 	Asset
 };
 
-class NFT : public Object
+struct NFT : Object
 {
-public:
 	NFT(const string & name, NFT_Type type);
 
 	NFT(const NFT & nft) :

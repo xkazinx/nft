@@ -2,22 +2,21 @@
 
 namespace Client
 {
-class App final : kazin::app::Base
+struct App final
 {
-public:
 	App();
-	~App() override;
+	~App();
 
 	RenderWindow _window{};
-	
-	int  Tick() override;
+
+	int  Tick();
+	// One pass of the loop: false when the window closed
+	bool Frame();
 
 	bool HandleEvents();
-	void ToggleConsole();
 
-private:
+	sf::Clock _delta_clock;
+
 	void InitializeWindow(u16 res_x, u16 res_y);
-
-	static void AdjustViewport(const GLsizei & x, const GLsizei & y);
 };
 }

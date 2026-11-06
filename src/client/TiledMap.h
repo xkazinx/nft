@@ -3,14 +3,13 @@
 
 namespace Client
 {
-class TiledTile;
-class TiledUnit;
+struct TiledTile;
+struct TiledUnit;
 
-class TiledMap final : public Object
+struct TiledMap final : Object
 {
-public:
 	explicit TiledMap(const string & map_name = "");
-	~TiledMap() override = default;
+	~TiledMap() override;
 
 	void Render(sf::RenderTarget & tgt, sf::RenderStates states) override;
 	void Tick() override;
@@ -20,25 +19,21 @@ public:
 	void UpdatePosition() override;
 	void Move(Vector2f pos) override;
 
-public:
 	string   _map_name;
 	Vector2i _size;
 	Vector2f _origin{ 200.f, 100.f };
 
 	bool Load(const string & map_name);
 
-private: // TiledTile
+	// TiledTile
 	vector<unique_ptr<TiledTile>> _tiles;
 
-public:
 	unique_ptr<TiledTile> & Get(Vector2i pos);
 
-
-private: // TiledUnit
+	// TiledUnit
 	vector<unique_ptr<TiledUnit>> _units;
 
-public:
 	TiledUnit * AddUnit(unique_ptr<TiledUnit> unit);
-	void         SetUnit(TiledUnit * unit, Vector2i);
+	void        SetUnit(TiledUnit * unit, Vector2i);
 };
 }

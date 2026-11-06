@@ -4,12 +4,11 @@
 
 namespace Client
 {
-class TiledUnit;
-class TiledMap;
+struct TiledUnit;
+struct TiledMap;
 
-class TiledTile final : public Object
+struct TiledTile final : Object
 {
-public:
 	static TiledMap * CurrentMap;
 
 	explicit TiledTile(const string & data);
@@ -25,12 +24,11 @@ public:
 	void Move(Vector2f pos) override;
 	void UpdatePosition() override;
 
-public:
 	Vector2i                      _pos{};
-	tile::Type                    _type;
+	tile::Type                    _type = tile::Type::Land;
 	underlying_type_t<tile::Flag> _flag{};
 
-	TiledUnit *   _unit = nullptr;
+	TiledUnit *    _unit = nullptr;
 	RectangleShape _square;
 
 	sf::VertexArray _vertexes;
