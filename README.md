@@ -1,5 +1,8 @@
 # nft
 
+A good time with friends: generating random avatars from different hand-drawn eyes,
+mouths, arms and other pieces, to post them as NFTs with bots.
+
 A 2D prototype (2022) on SFML and ImGui: a generator that layers random cogollo parts
 (arms, body, face, feet) into a new character and tints each layer at random, and a
 tiled map where two cogollos walk and drop bombs.

@@ -7,7 +7,12 @@
 | nft | master: the kazilib / SFML 3.1 / web / deploy commit (this file's) on `23b549e` (2022) | pushed |
 | kazilib (`src/dep/kazilib`, new submodule) | master `a28bf1b` (ImGui in a browser, the yips port's), unchanged here | on origin |
 
-## Last work (2026-11-06)
+## Last work (2026-11-08)
+
+- **README and GitHub description:** the project's story on top (a good time with friends,
+  random avatars from hand-drawn pieces posted as NFTs with bots). No code changed.
+
+## Earlier (2026-11-06)
 
 - **Native port:** kazilib submodule (ml version), SFML 2.5 → 3.1 x86, FASTBuild through
   kazilib (`src\fastbuild.json`), v145, C++latest, `/MD`, 64-bit-hosted tools. The old
